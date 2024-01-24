@@ -15,7 +15,7 @@ def elaboratore_multispettrale(percorso_raw_data, percorso_elab_data):
     for file in os.listdir(percorso_raw_data):
         nomi.append(int(file[9:-7]))
 
-    percorsi = glob.glob(f"{percorso_raw_data}\*.xls")
+    percorsi = glob.glob(f"{percorso_raw_data}/*.xls")
     results = []
 # Oltre al traspose, con .iloc() mi prendo la riga 0 e rinomino le colonne, dopodiché
 # prendo la riga uno dove sono i valori che mi interessano con df[1:]
@@ -55,7 +55,7 @@ def elaboratore_multispettrale(percorso_raw_data, percorso_elab_data):
     nome_file = input("Come vuoi chiamare il file finale?\n")
     df_finale = pd.concat(lista_di_dataframe)
     df_finale.columns = columns
-    with pd.ExcelWriter(f"{percorso_elab_data}\{nome_file}.xlsx", engine='xlsxwriter',
+    with pd.ExcelWriter(f"{percorso_elab_data}/{nome_file}.xlsx", engine='xlsxwriter',
                         engine_kwargs={'options': {'strings_to_numbers': True}}) as writer:
         df_finale.to_excel(writer, sheet_name="All index")
         for keys in final:
