@@ -1,10 +1,8 @@
+
 import xlsxwriter
 import pandas as pd
 import glob
 import os
-
-
-
 
 
 def elaboratore_multispettrale(percorso_raw_data, percorso_elab_data):
@@ -55,7 +53,10 @@ def elaboratore_multispettrale(percorso_raw_data, percorso_elab_data):
     with pd.ExcelWriter(f"{percorso_elab_data}/{nome_file}.xlsx", engine='xlsxwriter',
                         engine_kwargs={'options': {'strings_to_numbers': True}}) as writer:
         df_finale.to_excel(writer, sheet_name="All index")
-        for keys in final:
-            final[keys].to_excel(writer, sheet_name=keys)
+        for keys, dataframe in final.items():
+            dataframe.columns = columns
+            dataframe.to_excel(writer, sheet_name=keys)
 
     print("Ho finito di elaborare!")
+
+
